@@ -1,3 +1,4 @@
+#include "core\definitions.sqf"
 
 //made by SacherEEF 
 run = 1;
