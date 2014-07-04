@@ -1,0 +1,107 @@
+
+//made by SacherEEF 
+run = 1;
+westcounter=0;
+eastcounter=0;
+westcount=0;
+eastcount=0;
+westwin=10; //time in counts to win ... 1 count is somewhere around 1 sec(i hope);
+eastwin=10;
+capturezonemarker="capturezone"; //capturezonemarker
+timercount=30; //time when hint is shown again
+timer=1; //1 for capturetime in hint -- put in any other number to disable 
+sleeptimer=15; //checks every 15 seconds if someone entered the area to decrease server load	
+
+
+while{(run == 1)} do
+{
+	{
+		eastcount=0;
+		westcount=0;
+		switch(side _x) do
+		{
+			case west:
+			{
+				if([_x, capturezonemarker] call CBA_fnc_inArea) then { westcount=westcount + 1;}
+				
+			};break;
+			case east:
+			{
+				if([_x, capturezonemarker] call CBA_fnc_inArea) then { eastcount=eastcount + 1;	}
+				
+			};break;
+		}
+	}forEach allUnits;
+
+
+	while{((westcount > 0) || (eastcount > 0))} do
+	{
+		eastcount=0;
+		westcount=0;
+		{
+			switch(side _x) do
+			{
+				case west:
+				{
+					if([_x, capturezonemarker] call CBA_fnc_inArea) then { westcount=westcount + 1;}
+				};break;
+				case east:
+				{
+					if([_x, capturezonemarker] call CBA_fnc_inArea) then { eastcount=eastcount + 1;	}
+				};break;
+			}
+		}forEach allUnits;
+
+
+		if(westcount > 0 && eastcount == 0 ) then
+		{
+			
+			if(westcounter%timercount==0 && timer==1) then
+			{
+				[-2, {hintSilent format["Blufor controls the AO:%1",westcounter - 1];capturezonemarker setMarkerColor "ColorBlue"}] call CBA_fnc_globalExecute;
+			};
+			if(westcounter%timercount==0 && timer!=1) then
+			{
+				[-2, {hintSilent"Blufor controls the AO";capturezonemarker setMarkerColor "ColorBlue"}] call CBA_fnc_globalExecute;
+			};
+			eastcounter=0;	
+			westcounter=westcounter+1;
+		};
+
+		if(eastcount > 0 && westcount == 0 ) then
+		{
+			
+			if(eastcounter%timercount==0 && timer==1) then
+			{
+			[-2, {hintSilent format["Opfor controls the AO:%1",eastcounter - 1];capturezonemarker setMarkerColor "ColorRed"}] call CBA_fnc_globalExecute;
+			};
+			if(eastcounter%timercount==0 && timer!=1) then
+			{
+			[-2, {hintSilent "Opfor controls the AO";capturezonemarker setMarkerColor "ColorRed"}] call CBA_fnc_globalExecute;
+			};
+			westcounter=0;
+			eastcounter=eastcounter +1;
+		};
+
+		if(eastcount > 0 && westcount >0) then
+		{
+			[-2, {hintSilent "the AO is contested";capturezonemarker setMarkerColor "ColorWhite"}] call CBA_fnc_globalExecute;
+		};
+		if(westcounter == westwin) then
+		{
+		ENDMISSION("Blufor captured the area<br/>Bundeswehr Decisive Victory");
+		};
+		if(eastcounter == eastwin) then
+		{
+		ENDMISSION("Opfor captured the area<br/>Russian Decisive Victory");
+		};
+	sleep(1);
+	};
+	
+[-2, {hintSilent "the AO is uncontested";capturezonemarker setMarkerColor "ColorKhaki"}] call CBA_fnc_globalExecute;
+westcounter=0;
+eastcounter=0;
+westcount=0;
+eastcount=0;
+sleep(sleeptimer); 
+};
