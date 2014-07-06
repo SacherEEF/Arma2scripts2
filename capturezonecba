@@ -1,6 +1,6 @@
-
+#include "core\definitions.sqf"
 //made by SacherEEF 
-run = 1;
+//thanks to Olsen
 westcounter=0;
 eastcounter=0;
 westcount=0;
