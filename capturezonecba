@@ -25,12 +25,12 @@ while{(run == 1)} do
 			{
 				if([_x, capturezonemarker] call CBA_fnc_inArea) then { westcount=westcount + 1;}
 				
-			};break;
+			};
 			case east:
 			{
 				if([_x, capturezonemarker] call CBA_fnc_inArea) then { eastcount=eastcount + 1;	}
 				
-			};break;
+			};
 		}
 	}forEach allUnits;
 
@@ -45,11 +45,11 @@ while{(run == 1)} do
 				case west:
 				{
 					if([_x, capturezonemarker] call CBA_fnc_inArea) then { westcount=westcount + 1;}
-				};break;
+				};
 				case east:
 				{
 					if([_x, capturezonemarker] call CBA_fnc_inArea) then { eastcount=eastcount + 1;	}
-				};break;
+				};
 			}
 		}forEach allUnits;
 
