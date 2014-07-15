@@ -16,9 +16,10 @@ sleeptimer=15; //checks every 15 seconds if someone entered the area to decrease
 
 while{(run == 1)} do
 {
+	eastcount=0;
+	westcount=0;
 	{
-		eastcount=0;
-		westcount=0;
+		
 		switch(side _x) do
 		{
 			case west:
