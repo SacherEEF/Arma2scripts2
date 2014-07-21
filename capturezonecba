@@ -58,11 +58,7 @@ while{(run == 1)} do
 		if(westcount > 0 && eastcount == 0 ) then
 		{
 			
-			if(westcounter%timercount==0 && timer==1) then
-			{
-				[-2, {hintSilent format["Blufor controls the AO:%1",westcounter - 1];capturezonemarker setMarkerColor "ColorBlue"}] call CBA_fnc_globalExecute;
-			};
-			if(westcounter%timercount==0 && timer!=1) then
+			if(westcounter%timercount==0) then
 			{
 				[-2, {hintSilent"Blufor controls the AO";capturezonemarker setMarkerColor "ColorBlue"}] call CBA_fnc_globalExecute;
 			};
@@ -72,12 +68,7 @@ while{(run == 1)} do
 
 		if(eastcount > 0 && westcount == 0 ) then
 		{
-			
-			if(eastcounter%timercount==0 && timer==1) then
-			{
-			[-2, {hintSilent format["Opfor controls the AO:%1",eastcounter - 1];capturezonemarker setMarkerColor "ColorRed"}] call CBA_fnc_globalExecute;
-			};
-			if(eastcounter%timercount==0 && timer!=1) then
+			if (eastcounter%timercount==0) then
 			{
 			[-2, {hintSilent "Opfor controls the AO";capturezonemarker setMarkerColor "ColorRed"}] call CBA_fnc_globalExecute;
 			};
